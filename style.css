@@ -1,0 +1,28 @@
+.char {
+  color:black;
+  font-family: monospace;
+  border-top: 2px red solid;
+  border-bottom: 1px red dotted;
+  padding-bottom: 50px;
+  position: absolute;
+
+  transform-origin:bottom center;
+}
+
+.char2 {
+  transform:rotate(10deg);
+}
+.char3 {
+  transform:rotate(20deg);
+}
+.char4 {
+  transform:rotate(30deg);
+}
+.char5 {
+  transform:rotate(40deg);
+}
+
+.container {
+  position: relative;
+  left: 100px;
+}
