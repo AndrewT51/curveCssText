@@ -1,24 +1,29 @@
 'use strict';
 
 let curveText = (obj)=>{
-  // let {text,textColor,fontSize,curvature,degreeIncrements,overOrUnder,lineOnTop,lineOnBottom,lengthOfLines,lineColor} = obj;
-  
-  var text = obj.text;
-  var textColor = obj.textColor;
-  var fontSize = obj.fontSize;
-  var curvature = obj.curvature;
-  var degreeIncrements = obj.degreeIncrements||4;
-  var overOrUnder = obj.overOrUnder;
-  var lineOnTop = obj.lineOnTop;
-  var lineOnBottom = obj.lineOnBottom;
-  var lengthOfLines = obj.lengthOfLines;
-  var lineColor = obj.lineColor;
-
+  // destructured
+  let {
+        text="curveText",
+        textColor="black",
+        fontSize=2,
+        circleSize="200",
+        curvature=.3,
+        under,
+        backColor="transparent",
+        lineSides,
+        lineOnTop,
+        lineOnBottom,
+        lengthOfLines,
+        lineColor="black"
+      } = obj;
+  let vendors = ['webkitTransform', 'mozTransform', 'oTransform', 'msTransform', 'transform'];
   let arrayWithSpaces = text.split('');
   let arrayOfLetters = arrayWithSpaces.map(letter=> letter === ' ' ? '\u00A0' : letter)
   let centreLetter = arrayOfLetters.length/2 - .5
   let textContainer = document.createElement("div");
-  if(overOrUnder === "under"){
+  curvature=curvature*(360/arrayOfLetters.length)
+
+  if(under){
     arrayOfLetters.reverse();
   }
 
@@ -29,36 +34,57 @@ let curveText = (obj)=>{
     innerSpan.style.borderBottom = `${lineOnBottom}px solid ${lineColor||'black'}`;
     innerSpan.style.borderTop = `${lineOnTop}px solid ${lineColor||'black'}`;
     innerSpan.style.paddingLeft = innerSpan.style.paddingRight = `${lengthOfLines}px`;
+    innerSpan.style.backgroundColor = backColor;
     span.appendChild(innerSpan)
-    span.setAttribute('char-id',index);
-    span.style.position= "absolute";
-    overOrUnder === "under" ? span.style.paddingTop = `${curvature||200}px`: span.style.paddingBottom = `${curvature||200}px`;
-    span.style.transformOrigin = (overOrUnder || "over")  + " center";
-    span.style.fontFamily = "monospace";
-    span.style.color = textColor || "black";
-    innerSpan.style.fontSize = `${fontSize}em` || "1em";
+    innerSpan.setAttribute('char-id',index);
 
-    span.style.transform = `rotate(${(index*degreeIncrements-(centreLetter*degreeIncrements))}deg)`;
-    span.style.backgroundColor = "transparent";
+    // This code swaps the side the border appears on first/last characters to adjust
+    // for whether the text is over or under the circle
+    if(lineSides){
+      if(index === 0){
+        if(under){
+          innerSpan.style.borderRight = `${lineOnBottom}px solid ${lineColor}`;
+        }else{
+          innerSpan.style.borderLeft = `${lineOnBottom}px solid ${lineColor}`;   
+        }
+      }
+      if (index === arrayOfLetters.length-1){
+         if(under){
+          innerSpan.style.borderLeft = `${lineOnBottom}px solid ${lineColor}`;   
+        }else{
+          innerSpan.style.borderRight = `${lineOnBottom}px solid ${lineColor}`;
+        }
+      }  
+    }
+
+    span.style.position= "absolute";
+    under ? span.style.paddingTop = `${circleSize}px`: span.style.paddingBottom = `${circleSize}px`;
+    span.style.transformOrigin = under ? "top center": "bottom center";
+    span.style.fontFamily = "monospace";
+    span.style.color = textColor;
+    innerSpan.style.fontSize = `${fontSize}em`;
+    vendors.forEach(vendor=> span.style[vendor] = `rotate(${(index*curvature-(centreLetter*curvature))}deg)`;
     return span;
   })
+  
   characterElements.forEach((element)=> textContainer.appendChild(element))
   return textContainer;
 }
 
-let cont = document.getElementById('container')
-cont.style.marginTop = "200px"
-cont.style.marginLeft = "350px"
-cont.appendChild(curveText({
-  text:"This works great",
-  textColor:"blue",
-  fontSize:2.7,
-  curvature:800,
-  degreeIncrements:4,
-  overOrUnder:"over",
-  lineOnTop:1,
-  lineOnBottom:1,
-  lengthOfLines:4,
-  lineColor:"green",
-}))
+// Use an object with the following properties in the function's argument
+
+// curveText({
+//   text:"B L A C K J A C K",
+//   textColor:"blue",
+//   fontSize:4,
+//   circleSize:200,
+//   curvature:.6,
+//   under:true,
+//   backColor: "lightgrey",
+//   lineSides: true,
+//   lineOnTop:1,
+//   lineOnBottom:1,
+//   lengthOfLines:14,
+//   lineColor:"red",
+// })
 
