@@ -63,11 +63,12 @@ let curveText = (obj)=>{
     span.style.fontFamily = "monospace";
     span.style.color = textColor;
     innerSpan.style.fontSize = `${fontSize}em`;
-    vendors.forEach(vendor=> span.style[vendor] = `rotate(${(index*curvature-(centreLetter*curvature))}deg)`;
+    vendors.forEach(vendor=> span.style[vendor] = `rotate(${(index*curvature-(centreLetter*curvature))}deg)`);
     return span;
   })
   
   characterElements.forEach((element)=> textContainer.appendChild(element))
+  textContainer.setAttribute("id","curvy")
   return textContainer;
 }
 
