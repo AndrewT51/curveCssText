@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    
+  </div>
+  <script src="dist/main.js"></script>
+  <script>
+    var toAppend= curveText({
+    text:" This text will go around and around ",
+    // textColor:"blue",
+    fontSize:2,
+    circleSize:10000,
+    curvature:.1,
+    // under:true,
+    // backColor: "lightgreen",
+    lineSides: true,
+    // lineOnTop:1,
+    // lineOnBottom:1,
+    // lengthOfLines:4,
+    lineColor:"red",
+    })
+    var container = document.getElementsByClassName('container')[0]
+    container.appendChild(toAppend)
+  </script>
+</body>
+</html>

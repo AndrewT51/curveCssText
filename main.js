@@ -21,7 +21,7 @@ let curveText = (obj)=>{
   let arrayOfLetters = arrayWithSpaces.map(letter=> letter === ' ' ? '\u00A0' : letter)
   let centreLetter = arrayOfLetters.length/2 - .5
   let textContainer = document.createElement("div");
-  curvature=curvature*(360/arrayOfLetters.length)
+  let roundness=curvature*(360/arrayOfLetters.length)
 
   if(under){
     arrayOfLetters.reverse();
@@ -31,8 +31,14 @@ let curveText = (obj)=>{
     let span = document.createElement('span');
     let innerSpan = document.createElement('span');
     innerSpan.innerText = char;
-    innerSpan.style.borderBottom = `${lineOnBottom}px solid ${lineColor||'black'}`;
-    innerSpan.style.borderTop = `${lineOnTop}px solid ${lineColor||'black'}`;
+    if(lineOnBottom){
+      innerSpan.style.borderBottom = `1px solid ${lineColor||'black'}`;
+    }
+    if(lineOnTop){
+      innerSpan.style.borderTop = `1px solid ${lineColor||'black'}`;
+    }
+      
+      
     innerSpan.style.paddingLeft = innerSpan.style.paddingRight = `${lengthOfLines}px`;
     innerSpan.style.backgroundColor = backColor;
     span.appendChild(innerSpan)
@@ -43,16 +49,16 @@ let curveText = (obj)=>{
     if(lineSides){
       if(index === 0){
         if(under){
-          innerSpan.style.borderRight = `${lineOnBottom}px solid ${lineColor}`;
+          innerSpan.style.borderRight = `1px solid ${lineColor}`;
         }else{
-          innerSpan.style.borderLeft = `${lineOnBottom}px solid ${lineColor}`;   
+          innerSpan.style.borderLeft = `1px solid ${lineColor}`;   
         }
       }
       if (index === arrayOfLetters.length-1){
          if(under){
-          innerSpan.style.borderLeft = `${lineOnBottom}px solid ${lineColor}`;   
+          innerSpan.style.borderLeft = `1px solid ${lineColor}`;   
         }else{
-          innerSpan.style.borderRight = `${lineOnBottom}px solid ${lineColor}`;
+          innerSpan.style.borderRight = `1px solid ${lineColor}`;
         }
       }  
     }
@@ -63,14 +69,24 @@ let curveText = (obj)=>{
     span.style.fontFamily = "monospace";
     span.style.color = textColor;
     innerSpan.style.fontSize = `${fontSize}em`;
-    vendors.forEach(vendor=> span.style[vendor] = `rotate(${(index*curvature-(centreLetter*curvature))}deg)`);
+    vendors.forEach(vendor=> span.style[vendor] = `rotate(${(index*roundness-(centreLetter*roundness))}deg)`);
     return span;
   })
   
   characterElements.forEach((element)=> textContainer.appendChild(element))
   textContainer.setAttribute("id","curvy")
+  textContainer.style.marginTop = '100px';
+  var angle = roundness * arrayOfLetters.length
+  var radians = angle * Math.PI/ 180  
+  var widthOfText = Math.sqrt(Math.pow(circleSize,2)+Math.pow(circleSize,2)-2*Math.pow(circleSize,2)*Math.cos(radians));
+  // if(!under){
+    textContainer.style.marginLeft = (curvature > 0.5 ? 100+ circleSize +'px' : circleSize - (circleSize-widthOfText/2)+100+'px');
+    
+  // }
   return textContainer;
 }
+
+
 
 // Use an object with the following properties in the function's argument
 
