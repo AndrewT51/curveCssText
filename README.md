@@ -26,6 +26,8 @@ Then you can call the ```curveText()``` function in your project. It takes an ob
 When you call the function a ```div``` will be returned with the attribute ```id="curvy"```
 Also each separate character will have a ```char-id``` that corresponds to its position in the string.
 
+Go to http://www.andrewtriggfsd.com/curveTextDemoApp/ where there is an app that will generate the argument for the curveText function call.
+
 
 
 
