@@ -6,7 +6,7 @@ This program will help you to curve text using only CSS. It uses ```transform```
 After you ```npm install``` run ```gulp```
 Gulp will use Babel to convert from ES6
 ### To use
-Include a link to ```/dist/main.js``` in the ```index.html``` file of your project.
+Include a link to ```/dist/curveText.js``` in the ```index.html``` file of your project.
 Then you can call the ```curveText()``` function in your project. It takes an object as an argument with the following properties:
 
 #####text -this is where you put the string of text you want to curve
@@ -14,8 +14,8 @@ Then you can call the ```curveText()``` function in your project. It takes an ob
 #####fontSize - This takes a number type. The font size as measured in em. 
 #####circleSize - Takes a number type. The distance in pixels from the circle's centre to the text.
 #####curvature - This takes a number from 0 to 1 and defines how far the text wraps around the circle. 1 is a full circle and 0.5 is 180deg.
-#####lineOnTop - Takes a number type to decide how thick a line above the text is. Default is 0.
-#####lineOnBottom - Takes a number type to decide how thick a line below the text is. Default is 0.
+#####lineOnTop - Takes a boolean to indicate if a line should be above the text.
+#####lineOnBottom - Takes a boolean to indicate if a line should be below the text.
 #####lineSides - Takes a boolean to decide if the text will be bordered both sides by a line.
 #####lineColor - The color of the lines as a string.
 #####lengthOfLines - This can be fiddled with to try and get the separate top and bottom lines of each character to merge smoothly. Takes a number type.
